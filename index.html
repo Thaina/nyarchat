@@ -3,19 +3,17 @@
 
 <head>
 	<title>NearChat</title>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuOTKJh2CS2FiBrO8vSVcsTKBQSD-9kg4&callback=initMap"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuOTKJh2CS2FiBrO8vSVcsTKBQSD-9kg4&callback=initMap"></script>
 </head>
 
 <body>
-	<div id="NoServiceWorker">NoServiceWorker</div>
-	<div id="NoGeolocation">NoGeolocation</div>
 	<div id="map"></div>
 	<script>
 		if (!navigator.serviceWorker)
-			return document.getElementById("NoServiceWorker").style.display = "none";
+			return alert("NoServiceWorker");
 
 		if (!navigator.geolocation)
-			return document.getElementById("NoGeolocation").style.display = "none";
+			return alert("NoGeolocation");
 
 		navigator.geolocation.getCurrentPosition(function(position){
 			var map = new google.maps.Map(document.getElementById('map'), {
