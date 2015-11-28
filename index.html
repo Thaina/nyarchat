@@ -6,8 +6,10 @@
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuOTKJh2CS2FiBrO8vSVcsTKBQSD-9kg4"></script>
 </head>
 
-<body>
-	<div id="map"></div><script>
+<body style="margin:0;padding:0;height=100%">
+	<div id="map" style="margin:0;padding:0;height=100%"></div>
+	<script>
+		/// <reference path ="https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/googlemaps/google.maps.d.ts" />
 		if (!navigator.serviceWorker)
 			alert("NoServiceWorker");
 
@@ -15,15 +17,32 @@
 			alert("NoGeolocation");
 
 		navigator.geolocation.getCurrentPosition(function (position) {
+
 			var map = new google.maps.Map(document.getElementById('map'), {
 				center: { lat: position.coords.latitude, lng: position.coords.longitude },
 				zoom: 17
 			});
 
-		}, function (position) {
-			console.log(position);
-		});
+			var marker = new google.maps.Marker({
+				position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+				title: "Here"
+			});
 
+			marker.setMap(map);
+			navigator.geolocation.watchPosition(function (position) {
+
+				marker.setMap(null);
+				marker = new google.maps.Marker({
+					position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+					title: "Here"
+				});
+
+			}, function (position) {
+				alert(position);
+			});
+		}, function (position) {
+			alert(position);
+		});
 	</script>
 </body>
 
