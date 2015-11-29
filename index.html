@@ -4,14 +4,38 @@
 <head>
 	<title>NearChat</title>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuOTKJh2CS2FiBrO8vSVcsTKBQSD-9kg4"></script>
+	<script src="aws-sdk-2.2.19.js"></script>
+
 </head>
 
 <body style="margin:0;padding:0;height:100vh">
-	<div id="map" style="margin:0;padding:0;height:100%"></div>
+	<script>
+		window.fbAsyncInit = function () {
+			FB.init({
+				appId: '1668681120079994',
+				xfbml: true,
+				version: 'v2.5'
+			});
+		};
+
+		(function (d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) { return; }
+			js = d.createElement(s); js.id = id;
+			js.src = "//connect.facebook.net/en_US/sdk.js";
+			fjs.parentNode.insertBefore(js, fjs);
+		} (document, 'script', 'facebook-jssdk'));
+	</script>
+	<div class="fb-like" data-share="true" data-width="450" data-show-faces="true"/>
+	
+	<div id="map" style="margin:0;padding:0;height:100%;position: absolute;top: 0;left: 0;z-index: -100;"></div>
 	<script>
 		/// <reference path ="https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/googlemaps/google.maps.d.ts" />
+		/// <reference path ="aws-sdk-2.2.19.js" />
+
 		if (!navigator.serviceWorker)
 			alert("NoServiceWorker");
+
 
 		if (!navigator.geolocation)
 			alert("NoGeolocation");
