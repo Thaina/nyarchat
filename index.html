@@ -3,28 +3,30 @@
 
 <head>
 	<title>NearChat</title>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuOTKJh2CS2FiBrO8vSVcsTKBQSD-9kg4"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyAuOTKJh2CS2FiBrO8vSVcsTKBQSD-9kg4"></script>
 	<script src="aws-sdk-2.2.19.js"></script>
 
 </head>
 
 <body style="margin:0;padding:0;height:100vh">
-	<div id="map" style="margin:0;padding:0;height:100%;width:100%;position: absolute;top: 0;left: 0;z-index: -100;"></div>
+	<div style="position: absolute;top: 10;right: 10;">
+		<img id="me" />
+	</div>
+	<div id="map" style="margin:0;padding:0;height:100%;width:100%;position: absolute;top: 0;left: 0;"></div>
 	<script>
-		/// <reference path ="https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/googlemaps/google.maps.d.ts" />
-		/// <reference path ="aws-sdk-2.2.19.js" />
-
+		/// <reference path ="../google.maps.d.ts" />
 		if (!navigator.serviceWorker)
-			alert("NoServiceWorker");
+			alert("Mising ServiceWorker");
 
 
 		if (!navigator.geolocation)
-			alert("NoGeolocation");
+			alert("Mising Geolocation");
 
 		navigator.geolocation.getCurrentPosition(function (position) {
-
 			var map = new google.maps.Map(document.getElementById('map'), {
 				center: { lat: position.coords.latitude, lng: position.coords.longitude },
+				draggable: false,
+				minZoom: 12,
 				zoom: 17
 			});
 
@@ -36,30 +38,38 @@
 			marker.setMap(map);
 			navigator.geolocation.watchPosition(function (position) {
 
-				marker.setMap(null);
-				marker = new google.maps.Marker({
-					position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-					title: "Here"
-				});
-
-				marker.setMap(map);
+				marker.setPosition({ lat: position.coords.latitude, lng: position.coords.longitude });
 
 			}, function (position) {
-				alert(position);
+				alert(JSON.stringify(position));
 			});
 		}, function (position) {
-			alert(position);
+			alert(JSON.stringify(position));
 		});
 	</script>
 
 
-	<script>
+	<script type="javascript">
+		/// <reference path ="../facebook.d.ts" />
 		window.fbAsyncInit = function () {
 			FB.init({
-				appId: '1668681120079994',
+				appId: '1668702023411237',
 				xfbml: true,
 				version: 'v2.5'
 			});
+
+			FB.login(function(auth){
+				if(auth.status != "connected")
+					alert("Please connect facebook");
+
+				window.location	= "http://graph.facebook.com/v2.5/" + auth.authResponse.userID + "/picture?type=normal";
+			});
+
+			var credentials = new AWS.CognitoIdentityCredentials({
+				IdentityPoolId: 'ap-northeast-1:f34e274d-7a6c-4525-ba33-bd641b775f41'
+			});
+
+			AWS.config.update({ region: 'ap-northeast-1', credentials: credentials });
 		};
 
 		(function (d, s, id) {
@@ -70,7 +80,6 @@
 			fjs.parentNode.insertBefore(js, fjs);
 		} (document, 'script', 'facebook-jssdk'));
 	</script>
-	<div class="fb-like" data-share="true" data-width="450" data-show-faces="true"/>
 </body>
 
 </html>
