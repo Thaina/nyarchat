@@ -12,7 +12,8 @@
 				return;
 			
 			$http.get("https://librarinth.azurewebsites.net/api/LineLogin?code=DQtBoRHnMrFc3glzZfOJf8fFAp7xGmzFknG/TTfu0pwq7SWcR3UALQ==&linecode=" + code).then((response) => {
-				$scope.data = response;
+				console.log(response);
+				$scope.data = response.data;
 			},(err) => $scope.error = err);
 		});
 	</script>
