@@ -11,10 +11,6 @@
 		}).controller('body',($scope,$location) => {
 			var code	= $location.search().code;
 			alert(code);
-		}).run(($location, $rootScope) => {
-			$rootScope.$on('$routeChangeSuccess', function(event, current, previous) {
-				// some handler
-			});
 		});
 	</script>
 </head>
