@@ -1,11 +1,24 @@
 <!DOCTYPE html>
-<html>
-
+<html ng-app="test">
 <head>
 	<title>NearChat</title>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.js"></script>
+	<script type="text/javascript" src="http://code.angularjs.org/1.2.14/angular-route.js"></script>
+	<script type="text/javascript">
+		angular.module('test', ['ngRoute']).config(($routeProvider, $locationProvider) => {
+			$routeProvider.when('/', { template: 'Hello world!' });
+			$locationProvider.html5Mode(true);
+		}).controller('body',($scope,$location) => {
+			var code	= $location.search().code;
+			alert(code);
+		}).run(($location, $rootScope) => {
+			$rootScope.$on('$routeChangeSuccess', function(event, current, previous) {
+				// some handler
+			});
+		});
+	</script>
 </head>
-
-<body style="margin:0;padding:0;height:100vh">
+<body ng-controller="body" style="margin:0;padding:0;height:100vh">
 	<a href="https://access.line.me/dialog/oauth/weblogin?response_type=code&client_id=1487399503&redirect_uri=https://nyarchat.github.io&state=Test">
 		Line Login
 	</a>
