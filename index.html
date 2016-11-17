@@ -14,7 +14,16 @@
 			$http.get("https://librarinth.azurewebsites.net/api/LineLogin?code=DQtBoRHnMrFc3glzZfOJf8fFAp7xGmzFknG/TTfu0pwq7SWcR3UALQ==&linecode=" + code).then((response) => {
 				console.log(response);
 				$scope.data = response.data;
-			},(err) => $scope.error = err);
+				return $scope.data;
+			}.then((data) => {
+				return $http.get({
+					url: "https://api.line.me/v1/profile",
+					headers : { Authorization: 'Bearer ' + data.access_token }
+				});
+			}).then((response) => {
+				console.log(response);
+				$scope.data = response.data;
+			});
 		});
 	</script>
 	<base href="/" />
