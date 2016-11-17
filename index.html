@@ -4,8 +4,7 @@
 	<title>NearChat</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 	<script type="text/javascript">
-		angular.module('test', ['ngRoute']).config(($routeProvider, $locationProvider) => {
-			$routeProvider.when('/', { template: 'Hello world!' });
+		angular.module('test', []).config(($locationProvider) => {
 			$locationProvider.html5Mode(true);
 		}).controller('body',($scope,$location) => {
 			var code	= $location.search().code;
