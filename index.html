@@ -15,7 +15,7 @@
 				console.log(response);
 				$scope.data = response.data;
 				return $scope.data;
-			}.then((data) => {
+			}).then((data) => {
 				return $http.get({
 					url: "https://api.line.me/v1/profile",
 					headers : { Authorization: 'Bearer ' + data.access_token }
