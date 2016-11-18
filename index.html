@@ -1,43 +1,59 @@
 <!DOCTYPE html>
 <html ng-app="test">
+
 <head>
 	<title>NearChat</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 	<script type="text/javascript">
-		angular.module('test', []).config(($locationProvider) => {
-			$locationProvider.html5Mode(true);
-		}).controller('body',($scope,$location,$http) => {
+				angular.module('test', []).config(($locationProvider) => {
+					$locationProvider.html5Mode(true);
+				}).controller('body',($scope,$location,$http) => {
 			var code	= $location.search().code;
 			if(!code)
 				return;
-			
+
 			$http.get("https://librarinth.azurewebsites.net/api/LineLogin?code=DQtBoRHnMrFc3glzZfOJf8fFAp7xGmzFknG/TTfu0pwq7SWcR3UALQ==&linecode=" + code).then((response) => {
-				$scope.data = response.data;
-			});
+					$scope.data = response.data;
+				});
 		});
 	</script>
 	<base href="/" />
 </head>
+
 <body ng-controller="body" style="margin:0;padding:0;height:100vh">
 	<a href="https://access.line.me/dialog/oauth/weblogin?response_type=code&client_id=1487399503&redirect_uri=https://nyarchat.github.io&state=Test">
 		<svg width="200" height="45">
-  <style type="text/css" scoped>
-    rect.button,rect.button~text.line { fill: #00C300; } 
-    rect.button:hover,rect.button:hover~text.line { fill: #00E000; } 
-    rect.button:active,rect.button:active~text.line { fill: #00B300; } 
-    .bubble { fill: white; } 
-  </style>
-  <rect class="button" x="0" y="0" rx="10" ry="10" width="200" height="45"/>
-  <path transform="translate(7.5,7.5)" class="bubble" d="M0,12 Q0,0 15,0 30,0 30,12 30,24 15,30 15,24 10,24 0,24 0,12 z "/>
-  <text class="line" x="10" y="22.5" font-family="Helvetica" font-size="10" font-weight="bold">LINE</text>
-  <text class="bubble" x="60" y="28" font-family="Helvetica" font-size="18" font-weight="bold">Log in</text>
-  Sorry, your browser does not support inline SVG.
-  </rect>
-</svg>
+			<style type="text/css" scoped>
+				rect.button,
+				rect.button~text.line {
+					fill: #00C300;
+				}
+				
+				rect.button:hover,
+				rect.button:hover~text.line {
+					fill: #00E000;
+				}
+				
+				rect.button:active,
+				rect.button:active~text.line {
+					fill: #00B300;
+				}
+				
+				.bubble {
+					fill: white;
+				}
+			</style>
+			<rect class="button" x="0" y="0" rx="10" ry="10" width="200" height="45" />
+			<path transform="translate(7.5,7.5)" class="bubble" d="M0,12 Q0,0 15,0 30,0 30,12 30,24 15,30 15,24 10,24 0,24 0,12 z " />
+			<text class="line" x="10" y="22.5" font-family="Helvetica" font-size="10" font-weight="bold">LINE</text>
+			<text class="bubble" x="60" y="28" font-family="Helvetica" font-size="18" font-weight="bold">Log in</text>
+			Sorry, your browser does not support inline SVG.
+			</rect>
+		</svg>
 	</a>
-	
+
 	<div>
-		{{data}}
+		{{ data }}
 	</div>
 </body>
 
